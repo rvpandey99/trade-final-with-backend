@@ -1,24 +1,28 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { BuyComponent } from './buy/buy.component';
-import { SellComponent } from './sell/sell.component';
-import { OrderComponent } from './order/order.component';
-import { TradesComponent } from './trades/trades.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { NavbarComponent } from "./navbar/navbar.component";
+import { HomeComponent } from "./home/home.component";
+import { LoginComponent } from "./login/login.component";
+import { RegistrationComponent } from "./registration/registration.component";
+import { BuyComponent } from "./buy/buy.component";
+import { SellComponent } from "./sell/sell.component";
+import { OrderComponent } from "./order/order.component";
+import { TradesComponent } from "./trades/trades.component";
 
-import { AuthService } from './auth.service';
-import { OrderService } from './order.service';
-import {APP_BASE_HREF} from '@angular/common';
+import { AuthService } from "./auth.service";
+import { OrderService } from "./order.service";
+import { APP_BASE_HREF } from "@angular/common";
+
+export function getBaseUrl() {
+  return document.getElementsByTagName("base")[0].href;
+}
 
 @NgModule({
   declarations: [
@@ -36,9 +40,15 @@ import {APP_BASE_HREF} from '@angular/common';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/'},AuthService,JwtHelperService,OrderService],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: "/" },
+    { provide: "BASE_URL", useFactory: getBaseUrl, deps: [] },
+    AuthService,
+    JwtHelperService,
+    OrderService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

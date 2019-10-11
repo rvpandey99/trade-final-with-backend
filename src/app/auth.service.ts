@@ -1,24 +1,31 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { environment } from '../environments/environment';
+import { Injectable, Inject } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { JwtHelperService } from "@auth0/angular-jwt";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class AuthService {
   public jwtHelper = new JwtHelperService();
-  constructor(private _http: HttpClient) { }
-  api = environment.api;
-  register(body:any) {
-    return this._http.post(this.api + '/register',body,{observe:'body'});
+  constructor(
+    private _http: HttpClient,
+    @Inject("BASE_URL") private baseUrl: string
+  ) {}
+
+  // api = environment.api;
+  register(body: any) {
+    return this._http.post(this.baseUrl + "api/register", body, {
+      observe: "body"
+    });
   }
 
-  login(body:any) {
-    return this._http.post(this.api + '/login',body,{observe:'body'});
+  login(body: any) {
+    // console.log(this.base_Url);
+    return this._http.post(this.baseUrl + "api/login", body, {
+      observe: "body"
+    });
   }
 
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     return !this.jwtHelper.isTokenExpired(token);
   }
-
 }

@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, "dist/final")));
 
 app.get("*", (req, res) => {
   res.set("X-Content-Type-Options", "sniff");
-  res.sendfile(path.join(__dirname, "/dist/final/index.html"));
+  res.sendFile(path.join(__dirname, "/dist/final/index.html"));
 });
 //     try{
 //         settle();
