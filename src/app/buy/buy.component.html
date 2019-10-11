@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+<div *ngIf="successMessage" class="alert alert-success">
+{{successMessage}}
+</div>
+<!-- <p *ngIf="errorMessage && !successMessage">Status: {{errorMessage}}</p> -->
+<div *ngIf="errorMessage && !successMessage" id="error" class="alert alert-danger">
+  You can not buy and sell same stocks twice in a day.Error:{{errorMessage}}
+</div>
+
+<div *ngIf="data_loading" class="d-flex justify-content-center">
+  <div class="spinner-grow text-success mt-5" style="width: 6rem; height: 6rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!successMessage && !data_loading" class="col-md-6 offset-md-3 mt-3">
+  <div class="card">
+    <h4 class="card-header">Buy</h4>
+    <div class="card-body">
+      <form [formGroup]="buyForm" (ngSubmit)="onSubmit()">
+        
+        <div class="form-group">
+          <label for="ticker">Ticker:</label> 
+          <select formControlName="ticker" class="custom-select my-1 mr-sm-2" id="ticker">
+            <option *ngFor="let data of master" [ngValue]="data">
+              {{ data.ticker }}
+            </option>
+          </select>
+          <!-- <p>{{buyForm.value | json}}</p> -->
+          <span *ngIf="isValid('ticker')">Ticker is required.</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="mprice" >Market Price: </label>
+          <div id="mprice" class="form-control border-success text-success">{{buyForm.value.ticker.marketPrice}} </div>
+        </div>
+
+        <div class="form-group ">
+          <label for="bprice" >Bid Price:</label>
+          <input type="number" class="form-control" formControlName="bprice" id="bprice">
+          <span *ngIf="isValid('bprice')" >Bid Price is required.</span>
+        </div>
+
+        <div class="form-group ">
+          <label for="qty" >Quantity:</label>
+          <input type="number" class="form-control" formControlName="qty" id="qty">
+          <span *ngIf="isValid('qty')" >Quantity is required.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="limit">Limit:</label> 
+          <select formControlName="limit" class="custom-select my-1 mr-sm-2" id="limit">
+            <option value="1">1%</option>
+            <option value="2">2%</option>
+          </select>
+          <span *ngIf="isValid('limit')">Limit is required.</span>
+        </div>
+
+        <button [disabled]="!buyForm.valid || loading" type="submit" class="btn btn-success" id="buy">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

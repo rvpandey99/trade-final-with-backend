@@ -1,0 +1,65 @@
+<!-- Header -->
+<nav>
+  <div class="logo">
+    <span>
+      <strong class="brand">Online Trading</strong>
+    </span>
+  </div>
+  <hr>
+  <div class="nav-items">
+    <a routerLink='/login'><strong>Log in</strong></a>
+  </div>
+  <hr>  
+</nav>
+
+<div *ngIf="successMessage" class="alert alert-success">
+  {{successMessage}}
+  <span>Please <a routerLink='/login'>Log in</a> </span>
+</div>
+<div *ngIf="errorMessage && !successMessage" class="alert alert-success">{{errorMessage}}</div>
+
+<div *ngIf="!successMessage" class="col-md-6 offset-md-3 mt-5">
+  <div class="card">
+    <h4 class="card-header">Registration</h4>
+    <div class="card-body">
+      <form [formGroup]="user" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="userId"> User Id:</label>
+          <input type="text" class="form-control " formControlName="userId" id="userId">
+          <span *ngIf="isValid('userId')" >User Id is required.</span>
+        </div>
+        <div class="form-group ">
+          <label for="username" >User Name:</label>
+          <input type="text" class="form-control " formControlName="userName" id="username">
+          <span *ngIf="isValid('userName')" >User Name is required.</span>
+        </div>
+        <div class="form-group ">
+          <label for="password" >Password:</label>
+          <input type="password" class="form-control " formControlName="password" id="password"  pattern="(?=.*[@#$%&^*()])[A-Za-z\d@#$%&^*()]{8,}">
+          <span *ngIf="isValid('password')" >Password should be greater than 8 characters and must include at least one special character from @#$%&^*)(</span>
+        </div>
+        <div class="form-group ">
+          <label for="verifypassword" >Verify Password:</label>
+          <input type="password" class="form-control " formControlName="verifyPassword" id="verifypassword">
+          <span *ngIf="isValid('verifyPassword')" >Password should match.</span>
+        </div>
+        <div class="form-group ">
+          <label for="email" >Email:</label>
+          <input type="email" class="form-control " formControlName="email" id="email">
+          <span *ngIf="isValid('email')" >Please enter a valid email id.</span>
+        </div>
+        <div class="row">
+          <div ></div>
+          <div class="col-md-9">
+              <button [disabled]="!user.valid || loading" type="submit" class="btn btn-success" id="register">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Register
+              </button>
+              <span class="ml-3"> or click to <a routerLink='/login'>Log in</a> </span>
+          </div>   
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

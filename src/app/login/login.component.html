@@ -1,0 +1,50 @@
+<!-- Header -->
+<nav>
+  <div class="logo">
+    <span>
+      <strong class="brand">Online Trading</strong>
+    </span>
+  </div>
+  <hr>
+  <div class="nav-items">
+    <a routerLink='/registration'><strong>Register</strong></a> 
+  </div>
+  <hr>  
+</nav>
+<!-- <p>This application is in Development Phase.</p> -->
+<!-- Status -->
+<div *ngIf="successMessage" class="alert alert-danger">
+{{successMessage}}
+</div>
+<!-- <p *ngIf="errorMessage && !successMessage">Status: {{errorMessage}}</p> -->
+<div *ngIf="errorMessage && !successMessage" id="error" class="alert alert-danger">
+  Invalid credentials. Error:{{errorMessage}}
+</div>
+
+<div *ngIf="!successMessage" class="col-md-6 offset-md-3 mt-5">
+  <div class="card">
+    <h4 class="card-header">Log in</h4>
+    <div class="card-body">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group"> <!--  row  -->
+          <label for="userId">User Id:</label> <!--  class="col-md-3" -->
+          <input type="text" class="form-control" formControlName="userId" id="userId"> <!-- col-md-6-->
+          <span *ngIf="isValid('userId')">User Id is required.</span>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" formControlName="password" id="password" pattern="(?=.*[@#$%&^*()])[A-Za-z\d@#$%&^*()]{8,}">
+          <span *ngIf="isValid('password')">Password should be greater than 8 characters and must include at least one special character from @#$%&^*)(.</span>
+        </div>
+        <button [disabled]="!loginForm.valid || loading" type="submit" class="btn btn-success" id="login">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Log in
+        </button>
+        <span class="ml-3">
+          or click to
+          <a routerLink='/registration'>Register</a> 
+        </span>
+      </form>
+    </div>
+  </div>
+</div>
