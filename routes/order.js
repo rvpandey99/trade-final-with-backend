@@ -47,7 +47,7 @@ router.post('/buy', verify, async (req,res) => {
             // console.log(sameOrder[0],(Date.now() - sameOrder[0].orderId));
         }
     }catch(error){
-        console.log(error);
+        return console.log(error);
     }
     const tickerExist = await Stock.findOne({ticker : value.ticker.toUpperCase()});
     if (!tickerExist) return res.status(400).send('Stock ticker does not exist. Please try again with existing Stock.');
@@ -101,7 +101,7 @@ router.post('/sell', verify, async (req,res) => {
             // console.log(sameOrder[0],(Date.now() - sameOrder[0].orderId));
         }
     }catch(error){
-        console.log(error);
+        return console.log(error);
     }
 
     try{
