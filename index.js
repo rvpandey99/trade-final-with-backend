@@ -23,7 +23,7 @@ const order = require("./routes/order");
 
 //use route specific middlewares
 app.use("/api/", register);
-app.use("/api/", stock);
+app.use("/api/", stock.router);
 app.use("/api/", order);
 app.use(express.static(path.join(__dirname, "dist/final")));
 // app.use((req, res, next) => {
@@ -54,7 +54,7 @@ mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true }, err => {
   }
 });
 //create routes
-
+stock.createStocks();
 //resolve the port
 var port = normalizePort(process.env.PORT || "3001");
 app.set("port", port);
