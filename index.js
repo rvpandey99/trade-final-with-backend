@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const path = require("path");
 var cors = require("cors");
 require("dotenv/config");
-// const settle = require('./routes/settle');
 
 const app = express();
 
@@ -37,14 +36,6 @@ app.get("*", (req, res) => {
   res.set("X-Content-Type-Options", "sniff");
   return res.sendFile(path.join(__dirname, "/dist/final/index.html"));
 });
-//     try{
-//         settle();
-//     }catch(error){
-//         console.log(error)
-//     }
-//     console.log('settled...')
-//     return res.send('Trade settled.').status(200);
-// });
 //connect to mongodb
 mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true }, err => {
   if (!err) {
