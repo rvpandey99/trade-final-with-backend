@@ -5,21 +5,19 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 @Injectable({ providedIn: "root" })
 export class AuthService {
   public jwtHelper = new JwtHelperService();
-  constructor(
-    private _http: HttpClient,
-    @Inject("BASE_URL") private baseUrl: string
-  ) {}
-
+  constructor(private _http: HttpClient) {}
+  // ,
+  // @Inject("BASE_URL") private baseUrl: string
   // api = environment.api;
   register(body: any) {
-    return this._http.post(this.baseUrl + "api/register", body, {
+    return this._http.post("api/register", body, {
       observe: "body"
     });
   }
 
   login(body: any) {
     // console.log(this.base_Url);
-    return this._http.post(this.baseUrl + "api/login", body, {
+    return this._http.post("api/login", body, {
       observe: "body"
     });
   }

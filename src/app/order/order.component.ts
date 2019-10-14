@@ -1,24 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../order.service';
+import { Component, OnInit } from "@angular/core";
+import { OrderService } from "../order.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  selector: "app-order",
+  templateUrl: "./order.component.html",
+  styleUrls: ["./order.component.css"]
 })
 export class OrderComponent implements OnInit {
   master = [];
   loading = false;
-  constructor(private _order:OrderService) { }
+  title = "Online Trading System - Order Status";
+  constructor(private _order: OrderService, private titleService: Title) {}
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
     this.loading = true;
     this._order.getOrders().subscribe(
       (data: any) => {
         this.master = Object.keys(data).map(i => data[i]);
-        
-        this.master.sort((a,b)=>{
-          let dateA: any = new Date(a.orderDate), dateB: any = new Date(b.orderDate);
+
+        this.master.sort((a, b) => {
+          let dateA: any = new Date(a.orderDate),
+            dateB: any = new Date(b.orderDate);
           return dateB - dateA;
         });
         this.loading = false;
@@ -31,5 +35,4 @@ export class OrderComponent implements OnInit {
       }
     );
   }
-  
 }

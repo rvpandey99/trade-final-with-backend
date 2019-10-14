@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { AuthService } from "../auth.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-login",
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   successMessage: String;
   errorMessage: String;
+  title = "Online Trading System - Login";
 
   isValid(controlName) {
     return (
@@ -29,10 +31,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private _router: Router,
-    private _activeroute: ActivatedRoute
+    private _activeroute: ActivatedRoute,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
     this.loginForm = new FormGroup({
       userId: new FormControl("", [
         Validators.required,

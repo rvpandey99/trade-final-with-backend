@@ -1,35 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
-import { OrderService } from '../order.service';
-
-
+import { Component, OnInit } from "@angular/core";
+import {
+  AbstractControl,
+  FormGroup,
+  FormControl,
+  Validators
+} from "@angular/forms";
+import { OrderService } from "../order.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-sell',
-  templateUrl: './sell.component.html',
-  styleUrls: ['./sell.component.css']
+  selector: "app-sell",
+  templateUrl: "./sell.component.html",
+  styleUrls: ["./sell.component.css"]
 })
 export class SellComponent implements OnInit {
-  sellForm:FormGroup;
+  sellForm: FormGroup;
   loading = false;
   data_loading = false;
-  errorMessage:String;
+  errorMessage: String;
   successMessage: String;
   master = [];
+  title = "Online Trading System - Seller";
 
-  isValid(controlName){
-    return this.sellForm.get(controlName).invalid && this.sellForm.get(controlName).touched;
+  isValid(controlName) {
+    return (
+      this.sellForm.get(controlName).invalid &&
+      this.sellForm.get(controlName).touched
+    );
   }
-  constructor(private _order:OrderService) { }
+  constructor(private _order: OrderService, private titleService: Title) {}
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
     this.data_loading = true;
 
     this.sellForm = new FormGroup({
-      ticker: new FormControl('', [ Validators.required ]),
-      aprice: new FormControl('', [ Validators.required]),
-      qty: new FormControl('', [ Validators.required]),
-      limit: new FormControl('', [ Validators.required]),
+      ticker: new FormControl("", [Validators.required]),
+      aprice: new FormControl("", [Validators.required]),
+      qty: new FormControl("", [Validators.required]),
+      limit: new FormControl("", [Validators.required])
     });
 
     this._order.getStocks().subscribe(
@@ -45,7 +54,6 @@ export class SellComponent implements OnInit {
     );
   }
 
-  
   onSubmit() {
     this.loading = true;
     const body = {
@@ -53,22 +61,22 @@ export class SellComponent implements OnInit {
       aprice: this.sellForm.value.aprice,
       qty: this.sellForm.value.qty,
       limit: this.sellForm.value.limit
-    }
+    };
 
-    if(this.sellForm.valid){
+    if (this.sellForm.valid) {
       this._order.sell(body).subscribe(
         (data: any) => {
-          this.successMessage = 'Your order is placed successfully. Order ID is ' + data.orderId;
+          this.successMessage =
+            "Your order is placed successfully. Order ID is " + data.orderId;
           this.loading = false;
           console.log(data);
         },
         error => {
-          this.errorMessage = error.error || 'Something went wrong.';
+          this.errorMessage = error.error || "Something went wrong.";
           this.loading = false;
-        // console.log(error.error);
+          // console.log(error.error);
         }
       );
     }
   }
-
 }

@@ -6,6 +6,7 @@ import {
   Validators
 } from "@angular/forms";
 import { AuthService } from "../auth.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-registration",
@@ -17,6 +18,7 @@ export class RegistrationComponent implements OnInit {
   loading = false;
   successMessage: String;
   errorMessage: String;
+  title = "Online Trading System - Registration";
 
   isValid(controlName) {
     return (
@@ -38,9 +40,10 @@ export class RegistrationComponent implements OnInit {
     return null;
   }
 
-  constructor(private _auth: AuthService) {}
+  constructor(private _auth: AuthService, private titleService: Title) {}
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
     this.user = new FormGroup({
       userId: new FormControl("", [
         Validators.required,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { OrderService } from "../order.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-home",
@@ -10,9 +11,12 @@ export class HomeComponent implements OnInit {
   master = [];
   loading = false;
   user = localStorage.getItem("userName") || "";
-  constructor(private _order: OrderService) {}
+  title = "Online Trading System - Home";
+
+  constructor(private _order: OrderService, private titleService: Title) {}
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
     this.loading = true;
     this._order.getStocks().subscribe(
       data => {

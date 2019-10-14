@@ -85,7 +85,6 @@ router.post("/login", async (req, res) => {
       "bGVgGfug766gg&VFtvty%sdgfhdrttrfr7676vtg5wf321hj9056ccb3f",
     { expiresIn: "1h" }
   );
-  console.log(secret);
   const payload = {
     userId: user.userId,
     userName: user.userName,

@@ -1,4 +1,4 @@
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, Title } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
@@ -47,7 +47,8 @@ export function getBaseUrl() {
     { provide: "BASE_URL", useFactory: getBaseUrl, deps: [] },
     AuthService,
     JwtHelperService,
-    OrderService
+    OrderService,
+    Title
   ],
   bootstrap: [AppComponent]
 })
