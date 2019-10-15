@@ -43,7 +43,7 @@ export function getBaseUrl() {
     HttpClientModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: "/" },
+    { provide: APP_BASE_HREF, useValue: "/onlinetrading" },
     { provide: "BASE_URL", useFactory: getBaseUrl, deps: [] },
     AuthService,
     JwtHelperService,
